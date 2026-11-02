@@ -9,9 +9,9 @@ Check these against the current form and your own policy, since terms change.
 
 ## Form fields
 
-`scripts/fill_form.py` handles the TOTAL and date-comb issues below.
+`scripts/fill_form.py` handles the gender, TOTAL and date-comb issues below.
 
-- Part A gender widgets are mislabelled: `5 Gender` is the Male box, and `Male` is the Female box.
+- Part A gender widgets are mislabelled: `5 Gender` is the Male box, and `Male` is the Female box. Part B has the same swap in `5 Gender_2` and `Male_2`. In the values file, pass `"gender"` for Part A and `"main_insured_gender"` for Part B, each `"male"` or `"female"`, instead of these field names.
 - Date fields are DDMMYY combs. `Y_9`, `Y_10` and `Y_11` have MaxLen 5 and need 6.
 - TOTAL has a JavaScript auto-sum that zeroes text amounts, so it is removed.
 - Text renders at 10 pt with no shrink, so long values do not fit.

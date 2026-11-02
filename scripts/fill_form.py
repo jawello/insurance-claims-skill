@@ -3,10 +3,14 @@
 usage: python fill_form.py BLANK_PDF OUT_PDF VALUES_JSON [VALUES_JSON ...]
 
 Values files are merged in order (shared person data first, then the case):
-  {"fields": {"<qualified field name>": "text" | "/On" | "/Yes"},
+  {"gender": "male" | "female",               # Part A, the patient
+   "main_insured_gender": "male" | "female",  # Part B
+   "fields": {"<qualified field name>": "text" | "/On" | "/Yes"},
    "overlay": [[x, y, "text"], ...]}   # page-1 labels the form has no fields for
 
 Form quirks handled here:
+- gender checkboxes are misnamed: "5 Gender" is the Male box, "Male" is the Female box,
+  and the same goes for "5 Gender_2" and "Male_2" in Part B;
 - text is rendered as 10pt Helvetica with no shrink, so long values are rejected;
 - TOTAL has a JS auto-sum that zeroes text amounts, so it is removed;
 - date combs Y_9..Y_11 have MaxLen 5 but need DDMMYY;
@@ -20,6 +24,11 @@ from pypdf import PdfReader, PdfWriter
 from pypdf.generic import NameObject, NumberObject
 from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfgen import canvas
+
+GENDER_FIELDS = {
+    "gender": {"male": "5 Gender", "female": "Male"},
+    "main_insured_gender": {"male": "5 Gender_2", "female": "Male_2"},
+}
 
 
 def qualified(annot):
@@ -41,11 +50,17 @@ def inherited(annot, key):
 
 
 def main(blank, out, value_files):
-    fields, overlay = {}, []
+    fields, overlay, genders = {}, [], {}
     for path in value_files:
         data = json.load(open(path))
         fields.update(data.get("fields", {}))
         overlay += data.get("overlay", [])
+        genders.update({k: data[k] for k in GENDER_FIELDS if k in data})
+
+    for key, value in genders.items():
+        if value not in GENDER_FIELDS[key]:
+            sys.exit(f"{key} must be male or female, got {value!r}")
+        fields[GENDER_FIELDS[key][value]] = "/On"
 
     w = PdfWriter(clone_from=PdfReader(blank))
     widgets = {}
