@@ -25,7 +25,7 @@ Find the filing deadline, the annual limits and their reset date in the policy o
 
 One condition is one claim: one fresh form and one email.
 
-1. **Collect the scans on Google Drive.** The person scans to one Drive folder, by scanner or phone. Download them with `rclone copy "gdrive:<folder>" <Case>/originals` to a case folder outside any repository:
+1. **Collect the scans on Google Drive.** The person scans to one Drive folder. The easiest way is a phone, because the Google Drive app has a built-in document scanner. Download them with `rclone copy "gdrive:<folder>" <Case>/originals` to a case folder outside any repository:
    ```
    <Person>/<Case>/
      originals/  processed/  digital/  pdf/
@@ -33,7 +33,7 @@ One condition is one claim: one fresh form and one email.
    ```
    Shared insured-person values go in `<Person>/form_base.json`. Record decisions and the person's answers in README.md, with dates.
 
-2. **Clean and sort the scans locally.** Leave `originals/` untouched and run `scripts/process.py`. Pick the best of any duplicates and split documents by condition. Keep a table mapping scan to document to PDF page.
+2. **Clean and sort the scans locally.** Leave `originals/` untouched and run `scripts/process.py`. It reads only JPG files and skips the rest without a warning. A PDF from the Drive scanner is already cropped, so copy it to `digital/` and list it in the manifest as a `{"pdf": [...]}` entry. Pick the best of any duplicates and split documents by condition. Keep a table mapping scan to document to PDF page.
 
 3. **Transcribe** into `documents.md`: every date, service, doctor and amount. Look at each page and name a document by the title printed on it, because names carried over from notes drift. Take identity numbers and birth dates from the policy, since OCR of handwriting misreads them.
 
