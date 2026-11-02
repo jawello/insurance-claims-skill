@@ -11,8 +11,10 @@ It works only with the MetLife Cyprus group claim form.
 ```bash
 git clone https://github.com/jawello/insurance-claims-skill ~/.claude/skills/insurance-claims
 pip install -r ~/.claude/skills/insurance-claims/requirements.txt
-playwright install chromium
+playwright install chromium --only-shell
 ```
+
+Searchable PDFs also need [tesseract](https://github.com/tesseract-ocr/tesseract) with the language packs of your documents.
 
 Connect Google Drive with [rclone](https://rclone.org/drive/). Run `rclone config` in your own terminal, not through the agent, because it prints the token. Name the remote `gdrive`. rclone's shared client ID is being retired, so [create your own client ID](https://rclone.org/drive/#making-your-own-client-id).
 
@@ -33,7 +35,7 @@ Then ask Claude Code something like: "prepare a claim from the scans in this fol
 
 ## Status
 
-The workflow comes from real claims, but the packaged skill has not yet been run end to end on a new case. Check every form and amount before sending. This is not insurance or legal advice.
+The workflow comes from real claims. The packaged skill has been run end to end on an invented case, but not yet on a real claim. Check every form and amount before sending. This is not insurance or legal advice.
 
 ## License
 

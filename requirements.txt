@@ -4,3 +4,4 @@ Pillow
 pypdf
 reportlab
 playwright
+pymupdf
