@@ -1,10 +1,10 @@
 # insurance-claims
 
-A Claude Code skill for preparing health insurance reimbursement claims from scanned documents.
+A Claude Code skill for preparing MetLife Cyprus health insurance reimbursement claims from scanned documents.
 
 The agent cleans and sorts scans, reconciles amounts, fills the claim form, builds PDF packages and drafts the email. You scan the documents, download the numbered form, review the result and send it yourself.
 
-Form handling is written for the MetLife Cyprus group claim form. For another insurer, check the field handling in `scripts/fill_form.py` first.
+It works only with the MetLife Cyprus group claim form.
 
 ## Install
 

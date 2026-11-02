@@ -1,7 +1,7 @@
 ---
 name: insurance-claims
 description: >-
-  Prepare health insurance reimbursement claims from scanned documents: take scans from Google Drive,
+  Prepare MetLife Cyprus health insurance reimbursement claims from scanned documents: take scans from Google Drive,
   clean and sort them, reconcile amounts, get a fresh numbered claim form, fill it, build PDF packages,
   store them on Drive and draft the email. Optionally plan posting of originals, keep a claims registry,
   match payouts and organise a medical archive. Use this whenever the user mentions an insurance claim,
@@ -13,7 +13,7 @@ description: >-
 
 The agent does the paperwork. The person decides what to claim, signs, and sends. Every claimed amount must trace to a document, so a wrong number can be found and explained later.
 
-If the insurer has a file in `references/`, read it before filling a form. MetLife Cyprus: `references/metlife-cyprus.md`.
+This skill works only with the MetLife Cyprus group claim form. Read `references/metlife-cyprus.md` before filling a form.
 
 ## Before starting
 
@@ -45,13 +45,13 @@ One condition is one claim: one fresh form and one email.
 
 5. **Ask once, in one list,** for facts the documents lack, such as symptom onset or whether a condition is chronic. Never invent them. Unknown values stay unknown.
 
-6. **Get a fresh form for each case.** Download it from the insurer's site. If the insurer stamps the claim number in the browser, as MetLife does, the person downloads it, because a plain HTTP fetch gives an unnumbered form.
+6. **Get a fresh form for each case.** The person downloads it from the MetLife site in a browser. The site stamps the claim number there, so a plain HTTP fetch gives an unnumbered form.
 
-7. **Fill the form.** Run `scripts/fill_form.py BLANK OUT base.json case.json`, which rejects values too wide for a field. Render the result and look at it, since field names can be wrong. The script was written for the MetLife form, so for another insurer check its field handling first.
+7. **Fill the form.** Run `scripts/fill_form.py BLANK OUT base.json case.json`, which rejects values too wide for a field. Render the result and look at it, since field names can be wrong.
 
-8. **Build the package and store it on Drive.** Run `scripts/build_pdfs.py CASE_DIR` with the form first in the full package. For searchable pages, add an invisible OCR text layer locally: PyMuPDF `insert_text(render_mode=3)` with a Unicode font, then `subset_fonts()`. Upload to a folder by insurer and year.
+8. **Build the package and store it on Drive.** Run `scripts/build_pdfs.py CASE_DIR` with the form first in the full package. For searchable pages, add an invisible OCR text layer locally: PyMuPDF `insert_text(render_mode=3)` with a Unicode font, then `subset_fonts()`. Upload to a folder by year.
 
-9. **Draft the email.** Use a subject with policy, person and claim number, and list the attachments. For documents in another language, translate the key content and all services with costs in the body, unless the insurer requires certified translation. Check attachment size against the mail limit. Leave sending to the person.
+9. **Draft the email.** Use a subject with policy, person and claim number, and list the attachments. For documents in another language, translate the key content and all services with costs in the body, unless MetLife asks for a certified translation. Check attachment size against the mail limit. Leave sending to the person.
 
 10. **Confirm it went out.** Search Sent and read the whole thread, because additions are often later replies.
 
@@ -61,7 +61,7 @@ Do these only if the person wants them. None needs a particular task tracker.
 
 - **Originals by post.** Read the form's terms for what goes by post and by when. Make a checklist per package in whatever the person uses, even README.md, listing each paper by title, date and amount, and split what exists on paper from what must be printed. A receipt shared by several claims exists once: put the original in one package and a marked copy in the others. Check that the emails say the same thing. When printing, give each job a distinct title and compare pages with the print history.
 - **Registry.** A Drive sheet with one row per claim: number, person, service date, area, provider, amount, currency, date sent, status, reimbursed amount, payout date, link. Store claim numbers as text so leading zeros survive, and set date formats explicitly.
-- **Payouts.** Insurers often do not email amounts, so read bank inflows, not bookkeeping entries. Mark a claim paid only on an exact amount match. Keep other matches in a separate tab labelled as hypotheses.
+- **Payouts.** MetLife rarely emails amounts, so read bank inflows, not bookkeeping entries. Mark a claim paid only on an exact amount match. Keep other matches in a separate tab labelled as hypotheses.
 - **Medical archive on Drive.** A folder per person, then topic. One searchable PDF per visit, named `YYYY-MM-DD Doctor or test — clinic (city) — gist.pdf`. Claims stay apart, holding only the form, email and full package; link medical pages into topic folders with shortcuts. Once the person starts editing a summary document, change it in place and do not regenerate it. Before trashing originals, verify copies by checksum, show the list, and get explicit confirmation. Use trash, not permanent deletion.
 
 ## Boundaries
