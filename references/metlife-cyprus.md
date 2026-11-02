@@ -5,7 +5,7 @@ Check these against the current form and your own policy, since terms change.
 - Email: claimscyprus@metlife.com. Post: MetLife Europe d.a.c. (Cyprus Branch), Claims Department, 38 Kennedy Avenue, 1087 Nicosia.
 - Originals: Part F says originals are sent within 30 days of submission. If that is not feasible, keep them, because MetLife can request them for up to 6 years after settlement.
 - The main insured submits claims for dependents too.
-- The claim number is stamped client-side when the form is downloaded in a browser. curl of the PDF URL gives an unnumbered form.
+- The claim number is stamped in the browser when the group claim form link is clicked on https://www.metlife.com.cy/en/useful-documents/ (Claims section, English Version). curl of the PDF URL gives an unnumbered form. `scripts/download_form.py` does the click.
 
 ## Form fields
 

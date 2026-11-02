@@ -45,7 +45,7 @@ One condition is one claim: one fresh form and one email.
 
 5. **Ask once, in one list,** for facts the documents lack, such as symptom onset or whether a condition is chronic. Never invent them. Unknown values stay unknown.
 
-6. **Get a fresh form for each case.** The person downloads it from the MetLife site in a browser. The site stamps the claim number there, so a plain HTTP fetch gives an unnumbered form.
+6. **Get a fresh form for each case.** Run `scripts/download_form.py CASE_DIR`. It clicks the form link on the MetLife site in a headless browser, because the page stamps the claim number on that click and a plain HTTP fetch gives an unnumbered form. Each run gives a new number, so run it once per case.
 
 7. **Fill the form.** Run `scripts/fill_form.py BLANK OUT base.json case.json`, which rejects values too wide for a field. Render the result and look at it, since field names can be wrong.
 

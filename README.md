@@ -2,7 +2,7 @@
 
 A Claude Code skill for preparing MetLife Cyprus health insurance reimbursement claims from scanned documents.
 
-The agent cleans and sorts scans, reconciles amounts, fills the claim form, builds PDF packages and drafts the email. You scan the documents, download the numbered form, review the result and send it yourself.
+The agent cleans and sorts scans, reconciles amounts, downloads and fills the numbered claim form, builds PDF packages and drafts the email. You scan the documents, review the result and send it yourself.
 
 It works only with the MetLife Cyprus group claim form.
 
@@ -11,6 +11,7 @@ It works only with the MetLife Cyprus group claim form.
 ```bash
 git clone https://github.com/jawello/insurance-claims-skill ~/.claude/skills/insurance-claims
 pip install -r ~/.claude/skills/insurance-claims/requirements.txt
+playwright install chromium
 ```
 
 Then ask Claude Code something like: "prepare a claim from the scans in this folder".
@@ -21,6 +22,7 @@ Then ask Claude Code something like: "prepare a claim from the scans in this fol
 | --- | --- |
 | `SKILL.md` | Workflow and rules |
 | `scripts/process.py` | Cleans scans and photos |
+| `scripts/download_form.py` | Downloads a fresh numbered form from the MetLife site |
 | `scripts/fill_form.py` | Fills the form from JSON and rejects values too long for a field |
 | `scripts/build_pdfs.py` | Builds PDFs and a full package with bookmarks |
 | `references/metlife-cyprus.md` | MetLife Cyprus addresses and form quirks |
