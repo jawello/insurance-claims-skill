@@ -14,6 +14,10 @@ pip install -r ~/.claude/skills/insurance-claims/requirements.txt
 playwright install chromium
 ```
 
+Connect Google Drive with [rclone](https://rclone.org/drive/). Run `rclone config` in your own terminal, not through the agent, because it prints the token. Name the remote `gdrive`. rclone's shared client ID is being retired, so [create your own client ID](https://rclone.org/drive/#making-your-own-client-id).
+
+Attaching files to Gmail drafts needs the Gmail connector and Claude in Chrome.
+
 Then ask Claude Code something like: "prepare a claim from the scans in this folder".
 
 ## What's inside
